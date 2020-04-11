@@ -70,37 +70,22 @@
         function GameLoop(){
             window.requestAnimationFrame(GameLoop);
 
-            if (input.ArrowLeft == true){
+            // Verificando as teclas pressionadas
+            // E se o jogador esta dentro do canvas
+            if (input.ArrowLeft == true && quadrado.x > 0){
                 quadrado.x--;
             }
-            if (input.ArrowRight == true){
+            if (input.ArrowRight == true && quadrado.x + quadrado.largura < width){
                 quadrado.x++;
             }
 
-            if (input.ArrowUp == true){
+            if (input.ArrowUp == true && quadrado.y > 0){
                 quadrado.y--;
             }
-            if (input.ArrowDown == true){
+
+            if (input.ArrowDown == true && quadrado.y + quadrado.altura < 400){
                 quadrado.y++;
             }
-            /*if(x + 50 < 400){
-                x++;
-            }*/
-
-            /*
-            if(x > 0){
-                x--;
-            }*/
-
-            /*
-            if(y > 0){
-                y--;
-            }*/
-
-            
-            /*if(y + 50 < 400){
-                y++;
-            }*/
 
             contexto.clearRect(0, 0, width, height)
             contexto.fillRect(quadrado.x, quadrado.y, quadrado.largura, quadrado.altura);
