@@ -27,25 +27,62 @@
             y: height/2 - 25
         }
 
+        let input = {
+            ArrowRight: false,
+            ArrowLeft: false,
+            ArrowUp: false,
+            ArrowDown: false
+        }
+
         document.addEventListener("keydown", function (event){
             console.log(event)
             if(event.keyCode == "37"){
-                quadrado.x--;
+                input.ArrowLeft = true;
             }
             if(event.keyCode == "38"){
-                quadrado.y--;
+                input.ArrowUp = true;
             }
             if(event.keyCode == "39"){
-                quadrado.x++;
+                input.ArrowRight = true;
             }
             if(event.keyCode == "40"){
-                quadrado.y++;
+                input.ArrowDown = true;
             }
         })
+
+        document.addEventListener("keyup", function (event){
+            if(event.keyCode == "37"){
+                input.ArrowLeft = false;
+            }
+            if(event.keyCode == "38"){
+                input.ArrowUp = false;
+            }
+            if(event.keyCode == "39"){
+                input.ArrowRight = false;
+            }
+            if(event.keyCode == "40"){
+                input.ArrowDown = false;
+            }
+        })
+
+        //            x    y     largura   altura
 
         function GameLoop(){
             window.requestAnimationFrame(GameLoop);
 
+            if (input.ArrowLeft == true){
+                quadrado.x--;
+            }
+            if (input.ArrowRight == true){
+                quadrado.x++;
+            }
+
+            if (input.ArrowUp == true){
+                quadrado.y--;
+            }
+            if (input.ArrowDown == true){
+                quadrado.y++;
+            }
             /*if(x + 50 < 400){
                 x++;
             }*/
