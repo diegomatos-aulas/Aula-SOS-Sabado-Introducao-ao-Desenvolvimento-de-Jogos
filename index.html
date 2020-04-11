@@ -3,9 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            margin: 0
+        }
+        #GameScreen{
+            border: 1px solid black;
+        }
+    </style>
     <title>Introdução ao desenvolvimento de jogos</title>
 </head>
 <body>
-    
+    <canvas id="GameScreen" width=400 height=400></canvas>
+    <script>
+        const canvas = document.getElementById("GameScreen");
+        const contexto = canvas.getContext("2d");
+        let width = 400, height = 400;
+
+        let quadrado = {
+            largura: 50,
+            altura: 50,
+            x: width/2 - 25,
+            y: height/2 - 25
+        }
+
+        document.addEventListener("keydown", function (event){
+            console.log(event)
+            if(event.keyCode == "37"){
+                quadrado.x--;
+            }
+            if(event.keyCode == "38"){
+                quadrado.y--;
+            }
+            if(event.keyCode == "39"){
+                quadrado.x++;
+            }
+            if(event.keyCode == "40"){
+                quadrado.y++;
+            }
+        })
+
+        function GameLoop(){
+            window.requestAnimationFrame(GameLoop);
+
+            /*if(x + 50 < 400){
+                x++;
+            }*/
+
+            /*
+            if(x > 0){
+                x--;
+            }*/
+
+            /*
+            if(y > 0){
+                y--;
+            }*/
+
+            
+            /*if(y + 50 < 400){
+                y++;
+            }*/
+
+            contexto.clearRect(0, 0, width, height)
+            contexto.fillRect(quadrado.x, quadrado.y, quadrado.largura, quadrado.altura);
+        }
+
+        GameLoop();
+    </script>
 </body>
 </html>
