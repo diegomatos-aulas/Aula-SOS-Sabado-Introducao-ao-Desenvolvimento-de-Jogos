@@ -14,84 +14,8 @@
     <title>Introdução ao desenvolvimento de jogos</title>
 </head>
 <body>
-    <canvas id="GameScreen" width=400 height=400></canvas>
-    <script>
-        const canvas = document.getElementById("GameScreen");
-        const contexto = canvas.getContext("2d");
-        let width = 400, height = 400;
-
-        let quadrado = {
-            largura: 50,
-            altura: 50,
-            x: width/2 - 25,
-            y: height/2 - 25
-        }
-
-        let input = {
-            ArrowRight: false,
-            ArrowLeft: false,
-            ArrowUp: false,
-            ArrowDown: false
-        }
-
-        document.addEventListener("keydown", function (event){
-            console.log(event)
-            if(event.keyCode == "37"){
-                input.ArrowLeft = true;
             }
-            if(event.keyCode == "38"){
-                input.ArrowUp = true;
-            }
-            if(event.keyCode == "39"){
-                input.ArrowRight = true;
-            }
-            if(event.keyCode == "40"){
-                input.ArrowDown = true;
-            }
-        })
-
-        document.addEventListener("keyup", function (event){
-            if(event.keyCode == "37"){
-                input.ArrowLeft = false;
-            }
-            if(event.keyCode == "38"){
-                input.ArrowUp = false;
-            }
-            if(event.keyCode == "39"){
-                input.ArrowRight = false;
-            }
-            if(event.keyCode == "40"){
-                input.ArrowDown = false;
-            }
-        })
-
-        //            x    y     largura   altura
-
-        function GameLoop(){
-            window.requestAnimationFrame(GameLoop);
-
-            // Verificando as teclas pressionadas
-            // E se o jogador esta dentro do canvas
-            if (input.ArrowLeft == true && quadrado.x > 0){
-                quadrado.x--;
-            }
-            if (input.ArrowRight == true && quadrado.x + quadrado.largura < width){
-                quadrado.x++;
-            }
-
-            if (input.ArrowUp == true && quadrado.y > 0){
-                quadrado.y--;
-            }
-
-            if (input.ArrowDown == true && quadrado.y + quadrado.altura < 400){
-                quadrado.y++;
-            }
-
-            contexto.clearRect(0, 0, width, height)
-            contexto.fillRect(quadrado.x, quadrado.y, quadrado.largura, quadrado.altura);
-        }
-
-        GameLoop();
-    </script>
+    <canvas id="GameScreen"></canvas>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
