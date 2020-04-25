@@ -1,4 +1,6 @@
 // 1º PRINCIPIO SOLID => PRINCIPIO DE ÚNICA RESPONSABILIDADE
+
+// 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
 import Jogador from "./jogador.js"
 import Obstaculo from "./obstaculo.js"
 
