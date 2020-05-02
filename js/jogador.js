@@ -10,7 +10,7 @@ export default class Jogador extends Shape{
 
         this.movimentacaoDoJogador(keysDown);
 
-        this.delimitarOJogadorNoCanvas();    
+        this.delimitarOJogadorNoCanvas();
     }
 
     draw(contexto){
@@ -22,20 +22,23 @@ export default class Jogador extends Shape{
         keysDown.forEach(element => {
             if(element == "ArrowLeft"){ // => -1 se nao existir, ou >= 0 se existir
                 this.position.x--;
-            } 
+            }
+
             if(element == "ArrowRight"){
                 this.position.x++;
-            } 
+            }
+
             if(element == "ArrowUp"){
                 this.position.y--;
-            } 
+            }
+
             if(element == "ArrowDown"){
                 this.position.y++;
-            } 
+            }
             
             if(element == "ControlLeft"){
                 console.log("FOI")
-            }     
+            }
         });
     }
 
@@ -43,6 +46,7 @@ export default class Jogador extends Shape{
         if (this.position.x < 0){
             this.position.x = 0
         }
+        
         if (this.position.x + this.largura > this.GAME_WIDTH){
             this.position.x = this.GAME_WIDTH - this.largura;
         }

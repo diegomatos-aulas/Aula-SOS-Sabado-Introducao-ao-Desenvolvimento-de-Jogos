@@ -1,11 +1,10 @@
 import Shape from "./shape.js"
-import inputHandler from "./inputHandler.js"
 
 export default class Obstaculo extends Shape{
     constructor(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT){
         super(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT);
-        this.direcao = "Direita"
-        this.color = "red"
+        this.direcao = "Direita";
+        this.color = "red";
     }
 
     update(){

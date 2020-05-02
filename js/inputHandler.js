@@ -26,27 +26,12 @@ export default class InputHandler{
     getKeysDown(){
         let teclasPressionadas = [];
 
-        if(this.keysDown.ArrowRight){
-            teclasPressionadas.push("ArrowRight")
+        for (const tecla in this.keysDown) {
+            if(this.keysDown[tecla]){
+                teclasPressionadas.push(tecla)
+            }
         }
         
-        if(this.keysDown.ArrowLeft){
-            teclasPressionadas.push("ArrowLeft")
-        }
-        
-        if(this.keysDown.ArrowUp){
-            teclasPressionadas.push("ArrowUp")
-        }
-        
-        if(this.keysDown.ArrowDown){
-            teclasPressionadas.push("ArrowDown")
-        }
-        
-        if(this.keysDown.ControlLeft){
-            teclasPressionadas.push("ControlLeft")
-        }
-
-
         return teclasPressionadas;
     }
 }
