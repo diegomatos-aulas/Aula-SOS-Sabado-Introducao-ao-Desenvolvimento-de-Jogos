@@ -11,9 +11,13 @@ let GAME_WIDTH = canvas.width = 400, GAME_HEIGHT = canvas.height = 400;
 let entityList = [];
 let input, jogador;
 
+let imagemDoJogador = new Image();
+imagemDoJogador.addEventListener("load", init)
+imagemDoJogador.src = "../assets/player.png";
+
 function init() {
     // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
-    jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT);
+    jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT, imagemDoJogador);
     let obstaculo = new Obstaculo(20, 50, 100, 100, GAME_WIDTH, GAME_HEIGHT)
     entityList.push(jogador);
     entityList.push(obstaculo);
@@ -49,4 +53,4 @@ function GameLoop() {
     });
 }
 
-init();
+// init();

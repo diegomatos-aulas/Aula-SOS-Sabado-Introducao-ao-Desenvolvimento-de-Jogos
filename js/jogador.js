@@ -1,9 +1,10 @@
 import Shape from "./shape.js"
 
 export default class Jogador extends Shape{
-    constructor(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT){
+    constructor(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT, imagem){
         super(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT);
         this.color = "green"
+        this.imagem = imagem;
     }
 
     update(keysDown){
@@ -14,8 +15,9 @@ export default class Jogador extends Shape{
     }
 
     draw(contexto){
-        contexto.fillStyle = this.color;
-        contexto.fillRect(this.position.x, this.position.y, this.largura, this.altura);
+        contexto.drawImage(this.imagem, this.position.x, this.position.y)
+        // contexto.fillStyle = this.color;
+        // contexto.fillRect(this.position.x, this.position.y, this.largura, this.altura);
     }
 
     movimentacaoDoJogador(keysDown){
