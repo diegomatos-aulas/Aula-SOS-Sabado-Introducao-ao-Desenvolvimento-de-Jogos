@@ -30,8 +30,7 @@ function GameLoop() {
     window.requestAnimationFrame(GameLoop);
     contexto.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
-    // Verificando as teclas pressionadas
-    // E se o jogador esta dentro do canvas
+    // Realiza a lógica de todas as entidades do jogo
     entityList.forEach((entity1, index1) => {
         entity1.update(input.getKeysDown());
         entityList.forEach((entity2, index2) => {
@@ -48,6 +47,7 @@ function GameLoop() {
         });
     });
 
+    // Desenha na tela as intidades do jogo
     entityList.forEach(entity => {
         entity.draw(contexto);
     });
