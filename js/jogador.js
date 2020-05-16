@@ -1,10 +1,18 @@
 import Shape from "./shape.js"
 
 export default class Jogador extends Shape{
-    constructor(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT, imagem){
-        super(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT);
-        this.color = "green"
-        this.imagem = imagem;
+    constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT, imagem){
+        super(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT);
+        this._color = "green"
+        this._imagem = imagem;
+    }
+
+    get imagem(){
+        return this._imagem;
+    }
+
+    set imagem(valor){
+        this._imagem = valor;
     }
 
     update(keysDown){
@@ -15,7 +23,7 @@ export default class Jogador extends Shape{
     }
 
     draw(contexto){
-        contexto.drawImage(this.imagem, this.position.x, this.position.y)
+        contexto.drawImage(this._imagem, this.posicao.x, this.posicao.y)
         // contexto.fillStyle = this.color;
         // contexto.fillRect(this.position.x, this.position.y, this.largura, this.altura);
     }
@@ -23,19 +31,23 @@ export default class Jogador extends Shape{
     movimentacaoDoJogador(keysDown){
         keysDown.forEach(element => {
             if(element == "ArrowLeft"){ // => -1 se nao existir, ou >= 0 se existir
-                this.position.x--;
+                this.velocidade.setAngle(Math.PI)
+                this.posicao.adiciona(this.velocidade);
             }
 
             if(element == "ArrowRight"){
-                this.position.x++;
+                this.velocidade.setAngle(0)
+                this.posicao.adiciona(this.velocidade);
             }
 
             if(element == "ArrowUp"){
-                this.position.y--;
+                this.velocidade.setAngle(-Math.PI/2)
+                this.posicao.adiciona(this.velocidade);
             }
 
             if(element == "ArrowDown"){
-                this.position.y++;
+                this.velocidade.setAngle(Math.PI/2)
+                this.posicao.adiciona(this.velocidade);
             }
             
             if(element == "ControlLeft"){
@@ -45,20 +57,20 @@ export default class Jogador extends Shape{
     }
 
     delimitarOJogadorNoCanvas(){
-        if (this.position.x < 0){
+        if (this.posicao.x < 0){
             this.position.x = 0
         }
         
-        if (this.position.x + this.largura > this.GAME_WIDTH){
-            this.position.x = this.GAME_WIDTH - this.largura;
+        if (this.posicao.x + this._largura > this._GAME_WIDTH){
+            this.posicao.x = this._GAME_WIDTH - this._largura;
         }
     
-        if (this.position.y < 0){
-            this.position.y = 0
+        if (this.posicao.y < 0){
+            this.posicao.y = 0
         }
     
-        if (this.position.y + this.altura > this.GAME_HEIGHT){
-            this.position.y = this.GAME_HEIGHT - this.altura;
+        if (this.posicao.y + this._altura > this._GAME_HEIGHT){
+            this.posicao.y = this._GAME_HEIGHT - this._altura;
         }
     }
 }

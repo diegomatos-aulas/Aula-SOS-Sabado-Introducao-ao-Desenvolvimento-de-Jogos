@@ -1,10 +1,18 @@
 import Shape from "./shape.js"
 
 export default class Obstaculo extends Shape{
-    constructor(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT){
-        super(largura, altura, initialX, initialY, GAME_WIDTH, GAME_HEIGHT);
-        this.direcao = "Direita";
-        this.color = "red";
+    constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT){
+        super(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT);
+        this._direcao = "Direita";
+        // this._cor = "red";
+    }
+
+    get direcao(){
+        return this._direcao;
+    }
+
+    set direcao(valor){
+        this._direcao = valor;
     }
 
     update(){
@@ -13,26 +21,28 @@ export default class Obstaculo extends Shape{
     }
 
     draw(contexto){
-        contexto.fillStyle = this.color;
-        contexto.fillRect(this.position.x, this.position.y, this.largura, this.altura);
+        contexto.fillStyle = this._cor;
+        contexto.fillRect(this.posicao.x, this.posicao.y, this._largura, this._altura);
     }
 
     verificarDirecao(){
-        if (this.position.x == 300){
-            this.direcao = "Esquerda";
+        if (this.posicao.x == 300){
+            this._direcao = "Esquerda";
         }
 
-        if (this.position.x == 100){
-            this.direcao = "Direita";
+        if (this.posicao.x == 100){
+            this._direcao = "Direita";
         }
     }
 
     oscilar(){
-        if(this.direcao == "Direita"){
-            this.position.x++;
+        if(this._direcao == "Direita"){
+            this.velocidade.setAngle(0)
+            this.posicao.adiciona(this.velocidade);
         }
-        if(this.direcao == "Esquerda"){
-            this.position.x--;
+        if(this._direcao == "Esquerda"){
+            this.velocidade.setAngle(Math.PI)
+            this.posicao.adiciona(this.velocidade)
         }
     }
 }
