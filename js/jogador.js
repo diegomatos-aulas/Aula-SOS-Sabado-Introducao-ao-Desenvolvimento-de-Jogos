@@ -15,7 +15,7 @@ export default class Jogador extends Shape{
         this._imagem = valor;
     }
 
-    update(keysDown){
+    update(dt, keysDown){
 
         this.movimentacaoDoJogador(keysDown);
 
@@ -24,8 +24,6 @@ export default class Jogador extends Shape{
 
     draw(contexto){
         contexto.drawImage(this._imagem, this.posicao.x, this.posicao.y)
-        // contexto.fillStyle = this.color;
-        // contexto.fillRect(this.position.x, this.position.y, this.largura, this.altura);
     }
 
     movimentacaoDoJogador(keysDown){
@@ -58,7 +56,7 @@ export default class Jogador extends Shape{
 
     delimitarOJogadorNoCanvas(){
         if (this.posicao.x < 0){
-            this.position.x = 0
+            this.posicao.x = 0
         }
         
         if (this.posicao.x + this._largura > this._GAME_WIDTH){

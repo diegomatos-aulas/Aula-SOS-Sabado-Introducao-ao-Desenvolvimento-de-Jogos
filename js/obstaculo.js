@@ -4,7 +4,6 @@ export default class Obstaculo extends Shape{
     constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT){
         super(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT);
         this._direcao = "Direita";
-        // this._cor = "red";
     }
 
     get direcao(){

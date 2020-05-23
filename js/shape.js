@@ -8,7 +8,7 @@ export default class Shape{
         this._GAME_HEIGHT = GAME_HEIGHT;
         this.posicao = new Vector(xInicial, yInicial)
         this.velocidade = new Vector(1, 0);
-        this._cor = "black";
+        this._cor = "Black";
     }
 
     get largura(){
@@ -61,6 +61,6 @@ export default class Shape{
     }
 
     estadoOriginal(){
-        this._cor = "black";
+        this._cor = "Black";
     }
 }

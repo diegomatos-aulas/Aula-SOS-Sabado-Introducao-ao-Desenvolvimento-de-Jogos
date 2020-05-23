@@ -1,5 +1,6 @@
 export default class Vector {
     constructor(x, y) {
+        this.classe = "Vector"
         this._x = x;
         this._y = y;
     }
@@ -46,15 +47,60 @@ export default class Vector {
         this._y = Math.sin(angle) * value;
     }
 
-    soma(vector) {
-        let novoX = this._x + vector.x;
-        let novoY = this._y + vector.y;
+    soma(value) {
+        // Caso for um vetor
+        if (value.classe == "Vector") {
+            let novoX = this._x + value.x;
+            let novoY = this._y + value.y;
+            let soma = new Vector(novoX, novoY);
+            return soma;
+
+        }
+
+        // Caso for um escalar
+        let novoX = this._x + value;
+        let novoY = this._y + value;
         let soma = new Vector(novoX, novoY);
         return soma;
     }
 
-    adiciona(vector) {
-        this._x += vector.x;
-        this._y += vector.y;
+    adiciona(value) {
+        // Caso for um vetor
+        if (value.classe == "Vector") {
+            this._x += value.x;
+            this._y += value.y;
+            return;
+        }
+
+        // Caso for um escalar
+        this._x += value;
+        this._y += value;
+    }
+
+    multiplica(value) {
+        if (value.classe == "Vector") {
+            this._x *= value.x;
+            this._y *= value.y;
+            return;
+        }
+
+        this._x *= value;
+        this._y *= value;
+    }
+
+    produto(value) {
+        // Caso for um vetor
+        if (value.classe == "Vector") {
+            let novoX = this._x * value.x;
+            let novoY = this._y * value.y;
+            let produto = new Vector(novoX, novoY);
+            return produto;
+        }
+
+        // Caso for um escalar
+        let novoX = this._x * value;
+        let novoY = this._y * value;
+        let produto = new Vector(novoX, novoY);
+        return produto;
     }
 }

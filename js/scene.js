@@ -5,35 +5,44 @@ import Jogador from "./jogador.js"
 import Obstaculo from "./obstaculo.js"
 import InputHandler from "./inputHandler.js"
 import CollisionHandler from "./collisionHandler.js"
+import Galeria from "./galeria.js"
 
 const canvas = document.getElementById("GameScreen");
 const contexto = canvas.getContext("2d");
 let GAME_WIDTH = canvas.width = 400, GAME_HEIGHT = canvas.height = 400;
 let listaDeEntidades = [];
+let tempoAnterior = 0, deltaTime;
 let input, jogador;
 
-let imagemDoJogador = new Image();
-imagemDoJogador.addEventListener("load", init);
-imagemDoJogador.src = "../assets/player.png";
-
 function init() {
+    Galeria.CarregarImagem("jogador_img", "../assets/imagens/player.png", startGame, this);
+    Galeria.CarregarImagem("tiro_img", "../assets/imagens/tiro.png", startGame, this);
+    Galeria.CarregarAudio("shoot_sound", "../assets/audios/shoot_sound.mp3", startGame, this);
+}
+
+function startGame(){
+    console.log("StartGame")
     // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
-    jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT, imagemDoJogador);
+    jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT, Galeria.imagens.jogador_img);
     let obstaculo = new Obstaculo(20, 50, 100, 100, GAME_WIDTH, GAME_HEIGHT)
     listaDeEntidades.push(jogador);
     listaDeEntidades.push(obstaculo);
 
     input = new InputHandler();
-    GameLoop();
+    window.requestAnimationFrame(GameLoop);
 }
 
-function GameLoop() {
+function GameLoop(tempoAtual) {
     window.requestAnimationFrame(GameLoop);
+
+    deltaTime = tempoAtual - tempoAnterior;
+    tempoAnterior = tempoAtual;
+
     contexto.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
     // Realiza a lógica de todas as entidades do jogo
     listaDeEntidades.forEach((entidade1, index1) => {
-        entidade1.update(input.getKeysDown());
+        entidade1.update(deltaTime, input.getKeysDown());
         listaDeEntidades.forEach((entidade2, index2) => {
             if (index1 <= index2) return;
             // Realiza as Colisões
@@ -48,3 +57,5 @@ function GameLoop() {
         entity.draw(contexto);
     });
 }
+
+init();
