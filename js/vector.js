@@ -49,54 +49,37 @@ export default class Vector {
 
     soma(value) {
         // Caso for um vetor
-        if (value.classe == "Vector") {
-            let novoX = this._x + value.x;
-            let novoY = this._y + value.y;
-            let soma = new Vector(novoX, novoY);
-            return soma;
-
-        }
-
-        // Caso for um escalar
-        let novoX = this._x + value;
-        let novoY = this._y + value;
+        let novoX = this._x + value.x;
+        let novoY = this._y + value.y;
         let soma = new Vector(novoX, novoY);
         return soma;
     }
 
     adiciona(value) {
-        // Caso for um vetor
-        if (value.classe == "Vector") {
-            this._x += value.x;
-            this._y += value.y;
-            return;
-        }
+        this._x += value.x;
+        this._y += value.y;
+    }
 
-        // Caso for um escalar
-        this._x += value;
-        this._y += value;
+    
+    subtrai(value) {
+        // Caso for um vetor
+        let novoX = this._x - value.x;
+        let novoY = this._y - value.y;
+        let subtracao = new Vector(novoX, novoY);
+        return subtracao;
+    }
+
+    retirar(value) {
+        this._x -= value.x;
+        this._y -= value.y;
     }
 
     multiplica(value) {
-        if (value.classe == "Vector") {
-            this._x *= value.x;
-            this._y *= value.y;
-            return;
-        }
-
         this._x *= value;
         this._y *= value;
     }
 
     produto(value) {
-        // Caso for um vetor
-        if (value.classe == "Vector") {
-            let novoX = this._x * value.x;
-            let novoY = this._y * value.y;
-            let produto = new Vector(novoX, novoY);
-            return produto;
-        }
-
         // Caso for um escalar
         let novoX = this._x * value;
         let novoY = this._y * value;

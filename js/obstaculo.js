@@ -14,7 +14,7 @@ export default class Obstaculo extends Shape{
         this._direcao = valor;
     }
 
-    update(){
+    update(deltaTime){
         this.verificarDirecao();
         this.oscilar();
     }

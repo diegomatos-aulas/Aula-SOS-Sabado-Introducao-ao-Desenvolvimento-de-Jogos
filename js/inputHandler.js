@@ -1,12 +1,12 @@
+import Vector from "./vector.js"
+
 export default class InputHandler{
     constructor(){
         this.keysDown = {
-            ArrowRight: false,
-            ArrowLeft: false,
-            ArrowUp: false,
-            ArrowDown: false,
-            ControlLeft: false
+            KeyW: false,
         }
+
+        this.posicaoDoMouse = new Vector (0, 0);
 
         document.addEventListener("keydown", (event) => {
             // 2º PRINCIPIO SOLID => PRINCIPIO DE ABERTO/FECHADO
@@ -21,6 +21,11 @@ export default class InputHandler{
                 this.keysDown[event.code] = false;
             }
         })
+
+        document.addEventListener("mousemove", (event)=>{
+            this.posicaoDoMouse.x = event.clientX;
+            this.posicaoDoMouse.y = event.clientY;
+        })
     }
 
     getKeysDown(){
@@ -33,5 +38,9 @@ export default class InputHandler{
         }
         
         return teclasPressionadas;
+    }
+
+    getPosicaoDoMouse(){
+        return this.posicaoDoMouse;
     }
 }

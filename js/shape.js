@@ -51,7 +51,7 @@ export default class Shape{
         this._cor = valor;
     }
 
-    update(){
+    update(deltaTime){
 
     }
 

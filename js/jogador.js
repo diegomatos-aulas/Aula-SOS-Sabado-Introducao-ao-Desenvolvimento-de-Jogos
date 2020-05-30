@@ -1,74 +1,64 @@
 import Shape from "./shape.js"
 
-export default class Jogador extends Shape{
-    constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT, imagem){
+export default class Jogador extends Shape {
+    constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT, imagem) {
         super(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT);
         this._color = "green"
         this._imagem = imagem;
+        this.velocidade.setModulo(400);
     }
 
-    get imagem(){
+    get imagem() {
         return this._imagem;
     }
 
-    set imagem(valor){
+    set imagem(valor) {
         this._imagem = valor;
     }
 
-    update(dt, keysDown){
+    update(deltaTime, input) {
 
-        this.movimentacaoDoJogador(keysDown);
+        this.movimentacaoDoJogador(deltaTime, input.getKeysDown());
+
+        this.mirarEmDirecaoAoMouse(input.getPosicaoDoMouse());
 
         this.delimitarOJogadorNoCanvas();
+        this.posicao.adiciona(this.velocidade.produto(deltaTime));
     }
 
-    draw(contexto){
+    draw(contexto) {
         contexto.drawImage(this._imagem, this.posicao.x, this.posicao.y)
     }
 
-    movimentacaoDoJogador(keysDown){
-        keysDown.forEach(element => {
-            if(element == "ArrowLeft"){ // => -1 se nao existir, ou >= 0 se existir
-                this.velocidade.setAngle(Math.PI)
-                this.posicao.adiciona(this.velocidade);
-            }
-
-            if(element == "ArrowRight"){
-                this.velocidade.setAngle(0)
-                this.posicao.adiciona(this.velocidade);
-            }
-
-            if(element == "ArrowUp"){
-                this.velocidade.setAngle(-Math.PI/2)
-                this.posicao.adiciona(this.velocidade);
-            }
-
-            if(element == "ArrowDown"){
-                this.velocidade.setAngle(Math.PI/2)
-                this.posicao.adiciona(this.velocidade);
-            }
-            
-            if(element == "ControlLeft"){
-                console.log("FOI")
-            }
-        });
+    movimentacaoDoJogador(deltaTime, keysDown) {
+        console.log(keysDown)
+        if (keysDown.indexOf("KeyW") >= 0) { // => -1 se nao existir, ou >= 0 se existir
+            this.velocidade.setModulo(400);
+        } else {
+            this.velocidade.setModulo(0);
+        }
     }
 
-    delimitarOJogadorNoCanvas(){
-        if (this.posicao.x < 0){
+    delimitarOJogadorNoCanvas() {
+        if (this.posicao.x < 0) {
             this.posicao.x = 0
         }
-        
-        if (this.posicao.x + this._largura > this._GAME_WIDTH){
+
+        if (this.posicao.x + this._largura > this._GAME_WIDTH) {
             this.posicao.x = this._GAME_WIDTH - this._largura;
         }
-    
-        if (this.posicao.y < 0){
+
+        if (this.posicao.y < 0) {
             this.posicao.y = 0
         }
-    
-        if (this.posicao.y + this._altura > this._GAME_HEIGHT){
+
+        if (this.posicao.y + this._altura > this._GAME_HEIGHT) {
             this.posicao.y = this._GAME_HEIGHT - this._altura;
         }
+    }
+
+    mirarEmDirecaoAoMouse(posicaoDoMouse) {
+        let direcaoDoMouse = posicaoDoMouse.subtrai(this.posicao);
+        this.velocidade.setAngle(direcaoDoMouse.getAngle())
     }
 }

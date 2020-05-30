@@ -11,7 +11,7 @@ const canvas = document.getElementById("GameScreen");
 const contexto = canvas.getContext("2d");
 let GAME_WIDTH = canvas.width = 400, GAME_HEIGHT = canvas.height = 400;
 let listaDeEntidades = [];
-let tempoAnterior = 0, deltaTime;
+let tempoAnterior = 0, deltaTime = 0;
 let input, jogador;
 
 function init() {
@@ -21,7 +21,6 @@ function init() {
 }
 
 function startGame(){
-    console.log("StartGame")
     // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
     jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT, Galeria.imagens.jogador_img);
     let obstaculo = new Obstaculo(20, 50, 100, 100, GAME_WIDTH, GAME_HEIGHT)
@@ -35,6 +34,7 @@ function startGame(){
 function GameLoop(tempoAtual) {
     window.requestAnimationFrame(GameLoop);
 
+    tempoAtual /= 1000;
     deltaTime = tempoAtual - tempoAnterior;
     tempoAnterior = tempoAtual;
 
@@ -42,7 +42,7 @@ function GameLoop(tempoAtual) {
 
     // Realiza a lógica de todas as entidades do jogo
     listaDeEntidades.forEach((entidade1, index1) => {
-        entidade1.update(deltaTime, input.getKeysDown());
+        entidade1.update(deltaTime, input);
         listaDeEntidades.forEach((entidade2, index2) => {
             if (index1 <= index2) return;
             // Realiza as Colisões
