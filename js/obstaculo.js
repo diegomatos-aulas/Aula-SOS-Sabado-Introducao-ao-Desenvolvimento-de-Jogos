@@ -21,7 +21,7 @@ export default class Obstaculo extends Shape{
 
     draw(contexto){
         contexto.fillStyle = this._cor;
-        contexto.fillRect(this.posicao.x, this.posicao.y, this._largura, this._altura);
+        contexto.fillRect(this.posicao.x - this.largura*this.origin.x, this.posicao.y - this.altura*this.origin.y, this._largura, this._altura);
     }
 
     verificarDirecao(){

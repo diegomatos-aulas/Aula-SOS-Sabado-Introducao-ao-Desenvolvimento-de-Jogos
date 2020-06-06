@@ -27,11 +27,16 @@ export default class Jogador extends Shape {
     }
 
     draw(contexto) {
-        contexto.drawImage(this._imagem, this.posicao.x, this.posicao.y)
+        // contexto.drawImage(this._imagem, this.posicao.x, this.posicao.y)
+        contexto.save();
+        contexto.translate(this.posicao.x, this.posicao.y);
+        contexto.rotate(this.direcaoDoMouse);
+        contexto.drawImage(this._imagem, -this.largura/2, -this.altura/2, this.largura, this.altura)
+        contexto.restore();
     }
 
     movimentacaoDoJogador(deltaTime, keysDown) {
-        console.log(keysDown)
+        // console.log(keysDown)
         if (keysDown.indexOf("KeyW") >= 0) { // => -1 se nao existir, ou >= 0 se existir
             this.velocidade.setModulo(400);
         } else {
@@ -58,7 +63,7 @@ export default class Jogador extends Shape {
     }
 
     mirarEmDirecaoAoMouse(posicaoDoMouse) {
-        let direcaoDoMouse = posicaoDoMouse.subtrai(this.posicao);
-        this.velocidade.setAngle(direcaoDoMouse.getAngle())
+        this.direcaoDoMouse = posicaoDoMouse.subtrai(this.posicao).getAngle();
+        this.velocidade.setAngle(this.direcaoDoMouse)
     }
 }

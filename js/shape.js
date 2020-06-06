@@ -9,6 +9,10 @@ export default class Shape{
         this.posicao = new Vector(xInicial, yInicial)
         this.velocidade = new Vector(1, 0);
         this._cor = "Black";
+        this.origin = {
+            x: 0.5,
+            y: 0.5
+        }
     }
 
     get largura(){
@@ -57,7 +61,7 @@ export default class Shape{
 
     draw(contexto){
         contexto.fillStyle = this._cor;
-        contexto.fillRect(this.posicao.x, this.posicao.y, this._largura, this._altura);
+        contexto.fillRect(this.posicao.x - this.largura*this.origin.x, this.posicao.y - this.altura*this.origin.y, this._largura, this._altura);
     }
 
     estadoOriginal(){

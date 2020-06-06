@@ -7,55 +7,66 @@ import InputHandler from "./inputHandler.js"
 import CollisionHandler from "./collisionHandler.js"
 import Galeria from "./galeria.js"
 
-const canvas = document.getElementById("GameScreen");
-const contexto = canvas.getContext("2d");
-let GAME_WIDTH = canvas.width = 400, GAME_HEIGHT = canvas.height = 400;
-let listaDeEntidades = [];
-let tempoAnterior = 0, deltaTime = 0;
-let input, jogador;
+export default class Cena {
+    constructor() {
+        this.canvas = document.getElementById("GameScreen");
+        this.contexto = this.canvas.getContext("2d");
+        this.GAME_WIDTH = this.canvas.width = 400, this.GAME_HEIGHT = this.canvas.height = 400;
+        this.listaDeEntidades = [];
+        this.tempoAnterior = 0;
+        this.deltaTime = 0;
+    }
 
-function init() {
-    Galeria.CarregarImagem("jogador_img", "../assets/imagens/player.png", startGame, this);
-    Galeria.CarregarImagem("tiro_img", "../assets/imagens/tiro.png", startGame, this);
-    Galeria.CarregarAudio("shoot_sound", "../assets/audios/shoot_sound.mp3", startGame, this);
-}
+    init() {
+        Galeria.CarregarImagem("jogador_img", "../assets/imagens/player.png", this.startGame, this);
+        Galeria.CarregarImagem("tiro_img", "../assets/imagens/tiro.png", this.startGame, this);
+        Galeria.CarregarAudio("shoot_sound", "../assets/audios/shoot_sound.mp3", this.startGame, this);    
+    }
 
-function startGame(){
-    // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
-    jogador = new Jogador(50, 50, GAME_WIDTH / 2 - 25, GAME_HEIGHT / 2 - 25, GAME_WIDTH, GAME_HEIGHT, Galeria.imagens.jogador_img);
-    let obstaculo = new Obstaculo(20, 50, 100, 100, GAME_WIDTH, GAME_HEIGHT)
-    listaDeEntidades.push(jogador);
-    listaDeEntidades.push(obstaculo);
+    startGame(){
+        // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
+        this.jogador = new Jogador(50, 50, 0, 0, this.GAME_WIDTH,  this.GAME_HEIGHT, Galeria.imagens.jogador_img);
+        let obstaculo = new Obstaculo(20, 50, 100, 100,  this.GAME_WIDTH,  this.GAME_HEIGHT)
+        this.listaDeEntidades.push(this.jogador);
+        this.listaDeEntidades.push(obstaculo);
 
-    input = new InputHandler();
-    window.requestAnimationFrame(GameLoop);
-}
+        this.input = new InputHandler();
+        window.requestAnimationFrame(this.gameLoop);
+    }
 
-function GameLoop(tempoAtual) {
-    window.requestAnimationFrame(GameLoop);
+    gameLoop(tempoAtual){
+        window.requestAnimationFrame(this.gameLoop);
 
-    tempoAtual /= 1000;
-    deltaTime = tempoAtual - tempoAnterior;
-    tempoAnterior = tempoAtual;
+        tempoAtual /= 1000;
+        this.deltaTime = tempoAtual - tempoAnterior;
+        this.tempoAnterior = tempoAtual;    
 
-    contexto.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+        this.update();
+        this.draw();
+    }
 
-    // Realiza a lógica de todas as entidades do jogo
-    listaDeEntidades.forEach((entidade1, index1) => {
-        entidade1.update(deltaTime, input);
-        listaDeEntidades.forEach((entidade2, index2) => {
-            if (index1 <= index2) return;
-            // Realiza as Colisões
-            CollisionHandler(entidade1, entidade2, function(){
-                this._cor = "Red";
-            }, entidade1);
+    update(){
+        // Realiza a lógica de todas as entidades do jogo
+        this.listaDeEntidades.forEach((entidade1, index1) => {
+            entidade1.update(deltaTime, input);
+            this.listaDeEntidades.forEach((entidade2, index2) => {
+                if (index1 <= index2) return;
+                // Realiza as Colisões
+                CollisionHandler(entidade1, entidade2, function(){
+                    this._cor = "Red";
+                }, entidade1);
+            });
         });
-    });
+    }
 
-    // Desenha na tela as intidades do jogo
-    listaDeEntidades.forEach(entity => {
-        entity.draw(contexto);
-    });
+    draw(){
+        // Desenha na tela as intidades do jogo
+        this.listaDeEntidades.forEach(entidade => {
+            this.entidade.draw(contexto);
+        });
+    }
+
+    adicionarEntidadeAoJogo(entidade){
+        this.listaDeEntidades.push(entidade)
+    }
 }
-
-init();

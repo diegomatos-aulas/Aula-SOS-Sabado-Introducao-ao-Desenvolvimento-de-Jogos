@@ -40,7 +40,3 @@ let Galeria = {
 }
 
 export default Galeria;
-
-// let imagemDoJogador = new Image();
-// imagemDoJogador.addEventListener("load", init);
-// imagemDoJogador.src = "../assets/player.png";
