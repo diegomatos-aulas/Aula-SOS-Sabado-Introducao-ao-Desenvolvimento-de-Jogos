@@ -18,9 +18,9 @@ export default class Cena {
     }
 
     init() {
-        Galeria.CarregarImagem("jogador_img", "../assets/imagens/player.png", this.startGame, this);
-        Galeria.CarregarImagem("tiro_img", "../assets/imagens/tiro.png", this.startGame, this);
-        Galeria.CarregarAudio("shoot_sound", "../assets/audios/shoot_sound.mp3", this.startGame, this);    
+        Galeria.CarregarImagem("jogador_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/player.png", this.startGame, this);
+        Galeria.CarregarImagem("tiro_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/tiro.png", this.startGame, this);
+        Galeria.CarregarAudio("shoot_sound", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/audios/shoot_sound.mp3", this.startGame, this);    
     }
 
     startGame(){
