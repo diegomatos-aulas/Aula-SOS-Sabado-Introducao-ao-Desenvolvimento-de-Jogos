@@ -2,37 +2,47 @@ import Vector from "./vector.js"
 
 export default class InputHandler{
     constructor(){
-        this.keysDown = {
+        this._keysDown = {
             KeyW: false,
         }
 
-        this.posicaoDoMouse = new Vector (0, 0);
+        this._cliqueDoMouse = false;
+
+        this._posicaoDoMouse = new Vector (0, 0);
 
         document.addEventListener("keydown", (event) => {
             // 2º PRINCIPIO SOLID => PRINCIPIO DE ABERTO/FECHADO
-            if(this.keysDown.hasOwnProperty(event.code)){
-                this.keysDown[event.code] = true;
+            if(this._keysDown.hasOwnProperty(event.code)){
+                this._keysDown[event.code] = true;
             }
         })
         
         document.addEventListener("keyup", (event) => {
             // 2º PRINCIPIO SOLID => PRINCIPIO DE ABERTO/FECHADO
-            if(this.keysDown.hasOwnProperty(event.code)){
-                this.keysDown[event.code] = false;
+            if(this._keysDown.hasOwnProperty(event.code)){
+                this._keysDown[event.code] = false;
             }
         })
 
         document.addEventListener("mousemove", (event)=>{
-            this.posicaoDoMouse.x = event.clientX;
-            this.posicaoDoMouse.y = event.clientY;
+            this._posicaoDoMouse.x = event.clientX;
+            this._posicaoDoMouse.y = event.clientY;
+        })
+
+        document.addEventListener("mousedown", () => {
+            this._cliqueDoMouse = true;
+        })
+
+        document.addEventListener("mouseup", () => {
+            this._cliqueDoMouse = false;
         })
     }
 
     getKeysDown(){
         let teclasPressionadas = [];
 
-        for (const tecla in this.keysDown) {
-            if(this.keysDown[tecla]){
+        for (const tecla in this._keysDown) {
+            if(this._keysDown[tecla]){
                 teclasPressionadas.push(tecla)
             }
         }
@@ -41,6 +51,10 @@ export default class InputHandler{
     }
 
     getPosicaoDoMouse(){
-        return this.posicaoDoMouse;
+        return this._posicaoDoMouse;
+    }
+
+    getCliqueDoMouse(){
+        return this._cliqueDoMouse;
     }
 }

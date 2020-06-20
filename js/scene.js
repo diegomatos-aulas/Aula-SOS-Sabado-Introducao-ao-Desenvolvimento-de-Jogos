@@ -2,7 +2,7 @@
 
 // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
 import Jogador from "./jogador.js"
-import Obstaculo from "./obstaculo.js"
+import Asteroide from "./asteroide.js"
 import InputHandler from "./inputHandler.js"
 import CollisionHandler from "./collisionHandler.js"
 import Galeria from "./galeria.js"
@@ -15,30 +15,34 @@ export default class Cena {
         this.listaDeEntidades = [];
         this.tempoAnterior = 0;
         this.deltaTime = 0;
+        this.intervaloDeCriacao = 1000; // Em milisegundos
+
     }
 
     init() {
-        Galeria.CarregarImagem("jogador_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/player.png", this.startGame, this);
-        Galeria.CarregarImagem("tiro_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/tiro.png", this.startGame, this);
-        Galeria.CarregarAudio("shoot_sound", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/audios/shoot_sound.mp3", this.startGame, this);    
+        Galeria.CarregarImagem("jogador_img", "../assets/imagens/player.png", this.startGame, this);
+        Galeria.CarregarImagem("asteroide_img", "../assets/imagens/asteroide.png", this.startGame, this);
+        Galeria.CarregarImagem("tiro_img", "../assets/imagens/tiro.png", this.startGame, this);
+        Galeria.CarregarAudio("shoot_sound", "../assets/audios/shoot_sound.mp3", this.startGame, this);    
     }
 
     startGame(){
         // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
-        this.jogador = new Jogador(50, 50, 0, 0, this.GAME_WIDTH,  this.GAME_HEIGHT, Galeria.imagens.jogador_img);
-        let obstaculo = new Obstaculo(20, 50, 100, 100,  this.GAME_WIDTH,  this.GAME_HEIGHT)
-        this.listaDeEntidades.push(this.jogador);
-        this.listaDeEntidades.push(obstaculo);
+        this.jogador = new Jogador(50, 50, 0, 0, this.GAME_WIDTH,  this.GAME_HEIGHT, Galeria.imagens.jogador_img, this);
+
+        window.setInterval(this.criarAsteroides, this.intervaloDeCriacao);
+
+        this.adicionarEntidadeAoJogo(this.jogador);
 
         this.input = new InputHandler();
         window.requestAnimationFrame(this.gameLoop);
     }
 
-    gameLoop(tempoAtual){
+    gameLoop = (tempoAtual) => {
         window.requestAnimationFrame(this.gameLoop);
 
         tempoAtual /= 1000;
-        this.deltaTime = tempoAtual - tempoAnterior;
+        this.deltaTime = tempoAtual - this.tempoAnterior;
         this.tempoAnterior = tempoAtual;    
 
         this.update();
@@ -48,7 +52,7 @@ export default class Cena {
     update(){
         // Realiza a lógica de todas as entidades do jogo
         this.listaDeEntidades.forEach((entidade1, index1) => {
-            entidade1.update(deltaTime, input);
+            entidade1.update(this.deltaTime, this.input);
             this.listaDeEntidades.forEach((entidade2, index2) => {
                 if (index1 <= index2) return;
                 // Realiza as Colisões
@@ -60,13 +64,44 @@ export default class Cena {
     }
 
     draw(){
+        this.contexto.clearRect(0, 0, this.GAME_WIDTH, this.GAME_HEIGHT)
         // Desenha na tela as intidades do jogo
         this.listaDeEntidades.forEach(entidade => {
-            this.entidade.draw(contexto);
+            entidade.draw(this.contexto);
         });
     }
 
     adicionarEntidadeAoJogo(entidade){
         this.listaDeEntidades.push(entidade)
+    }
+
+    criarAsteroides = () => {
+        let randomX, randomY;
+        const direcaoDoSpawn = Math.floor((Math.random() * 4))
+
+        if(direcaoDoSpawn == 0){
+            randomY = 0;
+            randomX = Math.random() * this.GAME_WIDTH;
+        }
+        if(direcaoDoSpawn == 1){
+            randomY = Math.random() * this.GAME_HEIGHT;
+            randomX = this.GAME_WIDTH;
+        }
+        if(direcaoDoSpawn == 2){
+            randomY = this.GAME_HEIGHT;
+            randomX = Math.random() * this.GAME_WIDTH;
+        }
+        if(direcaoDoSpawn == 3){
+            randomY = Math.random() * this.GAME_WIDTH;
+            randomX = 0;
+        }
+
+        console.log(randomX, randomY)
+        let tempAsteroide = new Asteroide(32, 32, randomX, randomY);
+
+        const direcaoDoJogadorEmRelacaoAoAsteroid = this.jogador.posicao.subtrai(tempAsteroide.posicao).getAngle();
+        tempAsteroide.velocidade.setAngle(direcaoDoJogadorEmRelacaoAoAsteroid);
+
+        this.adicionarEntidadeAoJogo(tempAsteroide)
     }
 }
