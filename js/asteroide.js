@@ -5,7 +5,12 @@ export default class Asteroide extends Shape {
     constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT) {
         super(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT);
         this._imagem = Galeria.imagens.asteroide_img;
-        this.velocidade.setModulo(500)
+        this._nome = "Asteroide";
+        this.velocidade.setModulo(300)
+    }
+
+    get nome() {
+        return this._nome
     }
 
     update(deltaTime) {

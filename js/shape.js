@@ -13,6 +13,11 @@ export default class Shape{
             x: 0.5,
             y: 0.5
         }
+        this._active = true;
+    }
+
+    get active(){
+        return this._active;
     }
 
     get largura(){
@@ -53,6 +58,10 @@ export default class Shape{
 
     set cor(valor){
         this._cor = valor;
+    }
+
+    set active(valor){
+        this._active = valor;
     }
 
     update(deltaTime){

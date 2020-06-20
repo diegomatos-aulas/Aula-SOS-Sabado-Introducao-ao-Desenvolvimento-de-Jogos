@@ -7,6 +7,12 @@ export default class Tiro extends Shape {
     this._imagem = Galeria.imagens.tiro_img;
     this.velocidade.setModulo(1200);
     this.velocidade.setAngle(direcao);
+    this._nome = "Tiro";
+
+  }
+
+  get nome() {
+    return this._nome;
   }
 
   get imagem() {

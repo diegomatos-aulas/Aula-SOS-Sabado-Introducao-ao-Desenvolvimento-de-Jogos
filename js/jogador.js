@@ -1,5 +1,6 @@
 import Shape from "./shape.js"
 import Tiro from "./tiro.js"
+import Vector from "./vector.js";
 
 export default class Jogador extends Shape {
     constructor(largura, altura, xInicial, yInicial, GAME_WIDTH, GAME_HEIGHT, imagem, cena) {
@@ -8,8 +9,14 @@ export default class Jogador extends Shape {
         this._imagem = imagem;
         this._cena = cena;
         this._canFire = true;
-        this.velocidade.setModulo(400);
+        this.aceleracao = new Vector(400, 0);
+        this.velocidade.setModulo(0);
         this.direcaoDoMouse = 0;
+        this._nome = "Jogador";
+    }
+
+    get nome() {
+        return this._nome;
     }
 
     get imagem() {
@@ -54,10 +61,11 @@ export default class Jogador extends Shape {
     movimentacaoDoJogador(deltaTime, keysDown) {
         // console.log(keysDown)
         if (keysDown.indexOf("KeyW") >= 0) { // => -1 se nao existir, ou >= 0 se existir
-            this.velocidade.setModulo(400);
-        } else {
-            this.velocidade.setModulo(0);
-        }
+            this.velocidade.adiciona(this.aceleracao.produto(deltaTime));
+        } 
+        // else {
+        //     this.velocidade.setModulo(0);
+        // }
     }
 
     delimitarOJogadorNoCanvas() {
@@ -79,8 +87,10 @@ export default class Jogador extends Shape {
     }
 
     mirarEmDirecaoAoMouse(posicaoDoMouse) {
-        this.direcaoDoMouse = posicaoDoMouse.subtrai(this.posicao).getAngle();
-        this.velocidade.setAngle(this.direcaoDoMouse);
+        let posDoMouseRelativa = posicaoDoMouse.subtrai(this.cena.canvasPosicao);
+
+        this.direcaoDoMouse = posDoMouseRelativa.subtrai(this.posicao).getAngle();
+        this.aceleracao.setAngle(this.direcaoDoMouse);
     }
 
     atirar(){
