@@ -14,8 +14,8 @@ export default class Asteroide extends Shape {
     }
 
     update(deltaTime) {
+        this.destruirForaDoCanvas();
         this.posicao.adiciona(this.velocidade.produto(deltaTime))
-
     }
 
     draw(contexto) {

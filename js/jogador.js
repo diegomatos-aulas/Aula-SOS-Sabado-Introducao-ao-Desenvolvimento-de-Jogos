@@ -32,10 +32,11 @@ export default class Jogador extends Shape {
     }
 
     update(deltaTime, input) {
-
         this.movimentacaoDoJogador(deltaTime, input.getKeysDown());
 
         this.mirarEmDirecaoAoMouse(input.getPosicaoDoMouse());
+
+        this.delimitarOJogadorNoCanvas();
 
         if(input.getCliqueDoMouse() && this._canFire){
             this.atirar();
@@ -45,7 +46,6 @@ export default class Jogador extends Shape {
             this._canFire = true;
         }
 
-        this.delimitarOJogadorNoCanvas();
         this.posicao.adiciona(this.velocidade.produto(deltaTime));
     }
 
@@ -68,29 +68,47 @@ export default class Jogador extends Shape {
         // }
     }
 
-    delimitarOJogadorNoCanvas() {
-        if (this.posicao.x < 0) {
-            this.posicao.x = 0
-        }
-
-        if (this.posicao.x + this._largura > this._GAME_WIDTH) {
-            this.posicao.x = this._GAME_WIDTH - this._largura;
-        }
-
-        if (this.posicao.y < 0) {
-            this.posicao.y = 0
-        }
-
-        if (this.posicao.y + this._altura > this._GAME_HEIGHT) {
-            this.posicao.y = this._GAME_HEIGHT - this._altura;
-        }
-    }
-
     mirarEmDirecaoAoMouse(posicaoDoMouse) {
         let posDoMouseRelativa = posicaoDoMouse.subtrai(this.cena.canvasPosicao);
 
         this.direcaoDoMouse = posDoMouseRelativa.subtrai(this.posicao).getAngle();
         this.aceleracao.setAngle(this.direcaoDoMouse);
+    }
+
+    delimitarOJogadorNoCanvas() {
+        if (this.posicao.x - this.largura*this.origin.x < 0) {
+            if(this.direcaoDoMouse < 0 && this.direcaoDoMouse > -90*(Math.PI/180) || this.direcaoDoMouse > 0  && this.direcaoDoMouse < 90*(Math.PI/180)){
+                return
+            }
+            this.velocidade.setModulo(0);
+        }
+
+        if (this.posicao.x + this._largura*this.origin.x > this._GAME_WIDTH) {
+            if(this.direcaoDoMouse < -90*(Math.PI/180) && this.direcaoDoMouse > -180*(Math.PI/180) || this.direcaoDoMouse > 90*(Math.PI/180) && this.direcaoDoMouse < 180*(Math.PI/180)){
+                return
+            }
+            
+            this.velocidade.setModulo(0);
+        }
+
+        if (this.posicao.y - this.altura*this.origin.y < 0) {
+            if(this.direcaoDoMouse < Math.PI && this.direcaoDoMouse > 0){
+                console.log("Pode sair")
+                return
+            }
+            
+            this.velocidade.setModulo(0);
+        }
+
+        if (this.posicao.y + this._altura*this.origin.y > this._GAME_HEIGHT) {
+            console.log(this.direcaoDoMouse)
+            if(this.direcaoDoMouse > -Math.PI && this.direcaoDoMouse < 0){
+                console.log("Pode sair")
+                return
+            }
+            
+            this.velocidade.setModulo(0);
+        }
     }
 
     atirar(){

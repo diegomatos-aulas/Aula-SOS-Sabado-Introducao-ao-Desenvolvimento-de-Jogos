@@ -73,7 +73,21 @@ export default class Shape{
         contexto.fillRect(this.posicao.x - this.largura*this.origin.x, this.posicao.y - this.altura*this.origin.y, this._largura, this._altura);
     }
 
-    estadoOriginal(){
-        this._cor = "Black";
+    destruirForaDoCanvas(){
+        if (this.posicao.x + this.largura*this.origin.x < 0) {
+            this._active = false;
+        }
+
+        if (this.posicao.x - this._largura*this.origin.x > this._GAME_WIDTH) {
+            this._active = false;
+        }
+
+        if (this.posicao.y + this.altura*this.origin.y < 0) {
+            this._active = false;
+        }
+
+        if (this.posicao.y - this._altura*this.origin.y > this._GAME_HEIGHT) {
+            this._active = false
+        }
     }
 }

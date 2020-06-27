@@ -42,7 +42,7 @@ export default class Cena {
         // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
         this.jogador = new Jogador(50, 50, this.GAME_WIDTH/2, this.GAME_HEIGHT/2, this.GAME_WIDTH, this.GAME_HEIGHT, Galeria.imagens.jogador_img, this);
 
-        window.setInterval(this.criarAsteroides, this.intervaloDeCriacao);
+        // window.setInterval(this.criarAsteroides, this.intervaloDeCriacao);
 
         this.adicionarEntidadeAoJogo(this.jogador);
 
@@ -57,6 +57,7 @@ export default class Cena {
         this.deltaTime = tempoAtual - this.tempoAnterior;
         this.tempoAnterior = tempoAtual;
 
+        // console.log(this.listaDeEntidades)
         this.update();
         this.draw();
     }
@@ -77,12 +78,16 @@ export default class Cena {
                         if (entidade2.nome === "Jogador") return
                         entidade1.active = false
                         entidade2.active = false
+                        return
                     }
                     if(entidade2.nome === "Tiro") {
                         if (entidade1.nome === "Jogador") return
                         entidade1.active = false
                         entidade2.active = false
+                        return
                     }
+                    //Separacao
+                    this.separacao(entidade1, entidade2);
                 }, this);
             });
         });
@@ -127,5 +132,13 @@ export default class Cena {
         tempAsteroide.velocidade.setAngle(direcaoDoJogadorEmRelacaoAoAsteroid);
 
         this.adicionarEntidadeAoJogo(tempAsteroide)
+    }
+
+    separacao(entidade1, entidade2){
+        const velocidade1Temp = entidade1.velocidade;
+        const velocidade2Temp = entidade2.velocidade;
+
+        entidade1.velocidade = velocidade2Temp;
+        entidade2.velocidade = velocidade1Temp;
     }
 }

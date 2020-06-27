@@ -4,8 +4,5 @@ export default function CollisionHandler(entidade1, entidade2, callback, context
         entidade1.posicao.y + entidade1.altura*entidade1.origin.y >= entidade2.posicao.y - entidade2.altura*entidade2.origin.y &&
         entidade1.posicao.y - entidade1.altura*entidade1.origin.y <= entidade2.posicao.y + entidade2.altura*entidade2.origin.y) {
         callback.call(contexto)
-    }else{
-        entidade1.estadoOriginal();
-        entidade2.estadoOriginal();
     }
 }
