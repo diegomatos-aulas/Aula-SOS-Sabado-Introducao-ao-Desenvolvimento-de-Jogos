@@ -42,7 +42,7 @@ export default class Cena {
         // 3º PRINCIPIO SOLID => PRINCIPIO DA SUBSTITUIÇÃO DE LISKOV
         this.jogador = new Jogador(50, 50, this.GAME_WIDTH/2, this.GAME_HEIGHT/2, this.GAME_WIDTH, this.GAME_HEIGHT, Galeria.imagens.jogador_img, this);
 
-        // window.setInterval(this.criarAsteroides, this.intervaloDeCriacao);
+        window.setInterval(this.criarAsteroides, this.intervaloDeCriacao);
 
         this.adicionarEntidadeAoJogo(this.jogador);
 
