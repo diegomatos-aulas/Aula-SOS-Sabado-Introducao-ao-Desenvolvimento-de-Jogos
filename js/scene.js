@@ -32,10 +32,10 @@ export default class Cena {
     }
 
     init() {
-        Galeria.CarregarImagem("jogador_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/player.png", this.startGame, this);
-        Galeria.CarregarImagem("asteroide_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/asteroide.png", this.startGame, this);
-        Galeria.CarregarImagem("tiro_img", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/tiro.png", this.startGame, this);
-        Galeria.CarregarAudio("shoot_sound", "../Introducao-ao-Desenvolvimento-de-Jogos/assets/audios/shoot_sound.mp3", this.startGame, this);
+        Galeria.CarregarImagem("jogador_img", "../Aula-SOS-Sabado-Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/player.png", this.startGame, this);
+        Galeria.CarregarImagem("asteroide_img", "../Aula-SOS-Sabado-Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/asteroide.png", this.startGame, this);
+        Galeria.CarregarImagem("tiro_img", "../Aula-SOS-Sabado-Introducao-ao-Desenvolvimento-de-Jogos/assets/imagens/tiro.png", this.startGame, this);
+        Galeria.CarregarAudio("shoot_sound", "../Aula-SOS-Sabado-Introducao-ao-Desenvolvimento-de-Jogos/assets/audios/shoot_sound.mp3", this.startGame, this);
     }
 
     startGame() {
